@@ -1,0 +1,39 @@
+public class ManejoDeTareas
+{
+    
+    private AccesoADatos accesoADatos;
+
+    public AccesoADatos AccesoADatos { get => accesoADatos; set => accesoADatos = value; }
+
+    public ManejoDeTareas(AccesoADatos acceso){
+        accesoADatos = acceso;
+    }
+
+    public tarea crearNuevaTarea(tarea tarea){
+        var tareas = accesoADatos.Obtener();
+        tareas.Add(tarea);
+        tarea.Id = tareas.Count();
+        accesoADatos.Guardar(tareas);
+        return tarea;
+    }
+
+    public tarea buscarTareaPorId(int id){
+        var tareas = accesoADatos.Obtener();
+        var tarea1 = tareas.FirstOrDefault(tar => tar.Id == id);
+        return tarea1;
+    }
+
+    public tarea actulizar(tarea tareaNueva, int id){
+        var tareas = accesoADatos.Obtener();
+        var tareaAActualizar = tareas.FirstOrDefault(tar => tar.Id == id);
+        if (tareaAActualizar != null)
+        {
+            tareaAActualizar.Titulo = tareaNueva.Titulo;
+            tareaAActualizar.Descripcion = tareaNueva.Descripcion;
+            tareaAActualizar.Estado = tareaNueva.Estado;
+            accesoADatos.Guardar(tareas);
+        }
+        return tareaAActualizar;
+    }
+
+}
