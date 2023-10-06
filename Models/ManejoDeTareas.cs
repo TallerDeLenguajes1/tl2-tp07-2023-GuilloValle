@@ -36,4 +36,21 @@ public class ManejoDeTareas
         return tareaAActualizar;
     }
 
+    public bool eliminarTarea(int id){
+        var tareas = accesoADatos.Obtener();
+        var tareaAEliminar = tareas.FirstOrDefault(x => x.Id == id);
+
+        if (tareaAEliminar != null){
+            var seElimino = tareas.Remove(tareaAEliminar);
+
+            if(seElimino){
+                accesoADatos.Guardar(tareas);
+                return true;
+            }
+            
+        }
+        return false;
+        
+    }
+
 }

@@ -42,4 +42,27 @@ public class WeatherForecastController : ControllerBase
         manejoDeTareas.actulizar(tarea1,id);
         return Ok(tarea1);
     }
+
+    [HttpDelete("eliminarTarea")]
+
+    public ActionResult<bool> eliminarTarea(int id){
+        
+        
+        if (manejoDeTareas.buscarTareaPorId(id) == null)
+        {
+            return NotFound("No existe la tarea");
+        }
+
+        var seElimino =manejoDeTareas.eliminarTarea(id);
+        
+            if (seElimino == false)
+            {
+                return BadRequest(false);
+            }else
+            {
+                return Ok(true);
+            }
+        
+        
+    }
 }
