@@ -6,7 +6,7 @@ public enum EstadoTarea
     Completada
     
 }
-public class tarea
+public class Tarea
 {
     private int id;
     private string titulo;

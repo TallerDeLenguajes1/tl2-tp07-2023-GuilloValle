@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+
 public class ManejoDeTareas
 {
     
@@ -9,7 +11,7 @@ public class ManejoDeTareas
         accesoADatos = acceso;
     }
 
-    public tarea crearNuevaTarea(tarea tarea){
+    public Tarea crearNuevaTarea(Tarea tarea){
         var tareas = accesoADatos.Obtener();
         tareas.Add(tarea);
         tarea.Id = tareas.Count();
@@ -17,13 +19,13 @@ public class ManejoDeTareas
         return tarea;
     }
 
-    public tarea buscarTareaPorId(int id){
+    public Tarea buscarTareaPorId(int id){
         var tareas = accesoADatos.Obtener();
         var tarea1 = tareas.FirstOrDefault(tar => tar.Id == id);
         return tarea1;
     }
 
-    public tarea actulizar(tarea tareaNueva, int id){
+    public Tarea actulizar(Tarea tareaNueva, int id){
         var tareas = accesoADatos.Obtener();
         var tareaAActualizar = tareas.FirstOrDefault(tar => tar.Id == id);
         if (tareaAActualizar != null)
@@ -52,5 +54,16 @@ public class ManejoDeTareas
         return false;
         
     }
+
+    public List<Tarea> listarTareas(){
+        var tareas = accesoADatos.Obtener();
+        return tareas;
+    } 
+
+    public List<Tarea> listarTareasCompletadas(){
+        var tareas = accesoADatos.Obtener();
+        var tareasCompletadas = tareas.Where(x=>x.Estado== EstadoTarea.Completada).ToList();
+        return tareasCompletadas;
+    } 
 
 }

@@ -23,13 +23,13 @@ public class WeatherForecastController : ControllerBase
 
     [HttpGet("BuscarTareaPorId")]
 
-    public ActionResult<tarea> buscarTareaId(int id){
+    public ActionResult<Tarea> buscarTareaId(int id){
         var tarea = manejoDeTareas.buscarTareaPorId(id);
         return Ok(tarea);
     }
 
     [HttpPost("CrearNuevaTarea")]
-    public ActionResult<tarea> crearTarea(tarea tarea1)
+    public ActionResult<Tarea> crearTarea(Tarea tarea1)
     {
         manejoDeTareas.crearNuevaTarea(tarea1);
         return Ok(tarea1);
@@ -37,7 +37,7 @@ public class WeatherForecastController : ControllerBase
 
     [HttpPut("actualizarTarea")]
 
-    public ActionResult<tarea> actualizarTarea(tarea tarea1,int id)
+    public ActionResult<Tarea> actualizarTarea(Tarea tarea1,int id)
     {
         manejoDeTareas.actulizar(tarea1,id);
         return Ok(tarea1);
@@ -64,5 +64,22 @@ public class WeatherForecastController : ControllerBase
             }
         
         
+    }
+
+    [HttpGet("listarTareas")]
+    public ActionResult<List<Tarea>> listarTareas(){
+        return  Ok(manejoDeTareas.listarTareas());
+    }
+
+    [HttpGet("listarTareasCompletadas")]
+    public ActionResult<List<Tarea>> listarTareasCompletadas(){
+        var tareasCompletadas = manejoDeTareas.listarTareasCompletadas();
+        if (tareasCompletadas.Count() > 0)
+        {
+            return Ok(tareasCompletadas);
+        }else
+        {
+            return NotFound("No existen las tareas");
+        }
     }
 }
